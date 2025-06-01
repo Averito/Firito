@@ -102,12 +102,12 @@ fun StatisticsScreenContent(
                     else -> {
                         Box(
                             modifier = Modifier
-                                .size(220.dp)
+                                .size(350.dp)
                                 .padding(bottom = 24.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             PieChart(
-                                modifier = Modifier.size(200.dp),
+                                modifier = Modifier.size(300.dp),
                                 data = data,
                                 onPieClick = {
                                     val pieIndex = data.indexOf(it)
