@@ -27,12 +27,12 @@ class StatisticsInteractorImpl @Inject constructor(
     override suspend fun getMacrosForMonth(date: YearMonth): MacroStats {
         defaultAppLogger.debug("$name: Получение статистики макронутриенов.")
         val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth())
-        val foodList = dayLogsWithFood.flatMap { it.foods }
+        val dayLogs = dayLogsWithFood.map { it.dayLog }
 
         return MacroStatsImpl(
-            proteins = foodList.sumOf { it.proteins },
-            fats = foodList.sumOf { it.fats },
-            carbs = foodList.sumOf { it.carbs }
+            proteins = dayLogs.sumOf { it.totalProteins },
+            fats = dayLogs.sumOf { it.totalFats },
+            carbs = dayLogs.sumOf { it.totalCarbs }
         )
     }
 
@@ -64,12 +64,12 @@ class StatisticsInteractorImpl @Inject constructor(
     override suspend fun getCaloriesForMonth(date: YearMonth): CaloriesStats {
         defaultAppLogger.debug("$name: Получение статистики калорий и БЖУ.")
         val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth())
-        val foodList = dayLogsWithFood.flatMap { it.foods }
+        val dayLogs = dayLogsWithFood.map { it.dayLog }
 
-        val calories = foodList.map { it.calories }
-        val proteins = foodList.map { it.proteins }
-        val fats = foodList.map { it.fats }
-        val carbs = foodList.map { it.carbs }
+        val calories = dayLogs.map { it.totalCalories }
+        val proteins = dayLogs.map { it.totalProteins }
+        val fats = dayLogs.map { it.totalFats }
+        val carbs = dayLogs.map { it.totalCarbs }
 
         return CaloriesStatsImpl(
             calories = calories,
