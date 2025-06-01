@@ -13,8 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.day_log.DayLogWithFoodsModel
-import com.averito.firito.ui.screens.journal.LogRange
-import com.averito.firito.ui.shared.app_calendar.AppCalendar
+import com.averito.firito.ui.shared.utils.range_filter.RangeFilter
+import com.averito.firito.ui.shared.ui.app_calendar.AppCalendar
 import java.time.LocalDate
 
 @Composable
@@ -25,10 +25,10 @@ fun JournalScreenCalendar(
     onSelectMonthOrYear: (LocalDate) -> Unit,
     onDateSelected: (LocalDate) -> Unit,
     onDetailsClick: (LocalDate) -> Unit,
-    loadDayLogsWithFoods: (LogRange) -> Unit
+    loadDayLogsWithFoods: (RangeFilter) -> Unit
 ) {
     LaunchedEffect(Unit) {
-        loadDayLogsWithFoods(LogRange.Month(LocalDate.now()))
+        loadDayLogsWithFoods(RangeFilter.Month(LocalDate.now()))
     }
 
     LazyColumn {

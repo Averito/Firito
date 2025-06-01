@@ -1,4 +1,4 @@
-package com.averito.firito.ui.shared.app_top_bar
+package com.averito.firito.ui.shared.ui.app_top_bar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

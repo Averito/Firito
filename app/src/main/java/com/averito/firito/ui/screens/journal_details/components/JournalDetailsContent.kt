@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.day_log.DayLogWithFoodsModel
-import com.averito.firito.ui.shared.app_linear_progress_inidicator.AppLinearProgressIndicator
-import com.averito.firito.ui.shared.app_food_card.AppFoodCard
+import com.averito.firito.ui.shared.ui.app_linear_progress_inidicator.AppLinearProgressIndicator
+import com.averito.firito.ui.shared.ui.app_food_card.AppFoodCard
 import java.time.format.DateTimeFormatter
 
 @Composable

@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.food.components.FoodScreenContent
-import com.averito.firito.ui.shared.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,7 +41,7 @@ fun FoodScreen(
     }
 
     LaunchedEffect(Unit) {
-        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.MainFood.title)
+        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.MainFood.TITLE)
         baseAppLayoutViewModel.setTopBarVisibility(true)
         baseAppLayoutViewModel.setBottomBarVisibility(false)
         baseAppLayoutViewModel.setFloatingButton(null)
@@ -85,7 +85,7 @@ fun FoodScreenPreview() {
             weightInGrams = "21",
             description = ""
         ),
-        updateUiStateFood = {} as (String, String) -> Unit,
+        updateUiStateFood = { a,b -> },
         foodTemplatesLoading = false,
         foodTemplates = emptyList(),
         loadFoodTemplates = {},

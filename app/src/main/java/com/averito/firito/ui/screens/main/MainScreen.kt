@@ -19,7 +19,7 @@ import com.averito.firito.data.models.food.FoodModelImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutUiStateFloatingButtonOptions
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.main.components.MainScreenContent
-import com.averito.firito.ui.shared.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -40,7 +40,7 @@ fun MainScreen(
     }
 
     LaunchedEffect(Unit) {
-        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Main.title)
+        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Main.TITLE)
         baseAppLayoutViewModel.setTopBarVisibility(true)
         baseAppLayoutViewModel.setBottomBarVisibility(true)
         baseAppLayoutViewModel.setActions(null)

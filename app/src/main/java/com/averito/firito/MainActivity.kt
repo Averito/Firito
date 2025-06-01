@@ -9,7 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import com.averito.firito.data.managers.HealthConnectManager
 import com.averito.firito.data.managers.PermissionManager
-import com.averito.firito.ui.shared.app_navigation.AppNavGraph
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraph
 import com.averito.firito.ui.theme.FiritoTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

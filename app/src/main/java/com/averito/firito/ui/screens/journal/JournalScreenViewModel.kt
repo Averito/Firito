@@ -3,6 +3,10 @@ package com.averito.firito.ui.screens.journal
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.averito.firito.core.interactors.DayLogInteractor
+import com.averito.firito.ui.shared.utils.range_filter.DaysListFilter
+import com.averito.firito.ui.shared.utils.range_filter.RangeFilter
+import com.averito.firito.ui.shared.utils.range_filter.toDateRange
+import com.averito.firito.ui.shared.utils.range_filter.toRangeFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,11 +26,11 @@ class JournalScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            loadDayLogsWithFoods(LogRange.Month(LocalDate.now()))
+            loadDayLogsWithFoods(RangeFilter.Month(LocalDate.now()))
         }
     }
 
-    suspend fun loadDayLogsWithFoods(logRange: LogRange) {
+    suspend fun loadDayLogsWithFoods(logRange: RangeFilter) {
         val pairDates = logRange.toDateRange()
         val dayLogs = dayLogInteractor.getWithFoodsByRangeDate(pairDates.first, pairDates.second)
         _uiState.value = _uiState.value.copy(dayLogsWithFoods = dayLogs)
@@ -40,10 +44,10 @@ class JournalScreenViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(selectedTabIndex = newTabIndex)
     }
 
-    fun updateDayLogFilter(dayLogFilter: DayLogListFilter) {
+    fun updateDayLogFilter(dayLogFilter: DaysListFilter) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(dayLogListFilter = dayLogFilter)
-            loadDayLogsWithFoods(dayLogFilter.toLogRange())
+            loadDayLogsWithFoods(dayLogFilter.toRangeFilter())
         }
     }
 }

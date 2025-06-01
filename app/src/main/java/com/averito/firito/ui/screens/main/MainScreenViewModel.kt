@@ -44,7 +44,6 @@ class MainScreenViewModel @Inject constructor(
 
     fun updateDayLog() {
         viewModelScope.launch {
-            dayLogInteractor.ensureDayLogExists()
             dayLogInteractor.updateCurrently()
             loadDayLogWithFoodsInternal()
         }

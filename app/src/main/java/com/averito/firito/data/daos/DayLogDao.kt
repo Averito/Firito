@@ -12,16 +12,6 @@ import java.time.LocalDate
 
 @Dao
 interface DayLogDao {
-    @Query("SELECT * FROM logs WHERE date = :date LIMIT 1")
-    suspend fun getByDate(date: LocalDate): DayLogEntity?
-
-    @Query("""
-        SELECT * FROM logs 
-        WHERE strftime('%m', date) = :month AND strftime('%Y', date) = :year
-        ORDER BY date ASC
-    """)
-    suspend fun getByMonthYear(month: String, year: String): List<DayLogEntity>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dayLog: DayLogEntity): Unit
 

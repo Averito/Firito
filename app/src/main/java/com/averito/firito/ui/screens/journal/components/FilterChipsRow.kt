@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.averito.firito.ui.screens.journal.DayLogListFilter
+import com.averito.firito.ui.shared.utils.range_filter.DaysListFilter
 
 @Composable
 fun FilterChipsRow(
-    selected: DayLogListFilter,
-    onSelected: (DayLogListFilter) -> Unit
+    selected: DaysListFilter,
+    onSelected: (DaysListFilter) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -22,7 +22,7 @@ fun FilterChipsRow(
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        DayLogListFilter.all.forEach { filter ->
+        DaysListFilter.all.forEach { filter ->
             FilterChip(
                 selected = selected == filter,
                 onClick = { onSelected(filter) },

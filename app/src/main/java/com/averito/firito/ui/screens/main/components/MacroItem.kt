@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.averito.firito.ui.shared.app_linear_progress_inidicator.AppLinearProgressIndicator
+import com.averito.firito.ui.shared.ui.app_linear_progress_inidicator.AppLinearProgressIndicator
 
 @Composable
 fun MacroItem(name: String, value: Float) {

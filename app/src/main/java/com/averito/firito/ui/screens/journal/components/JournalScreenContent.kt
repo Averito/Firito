@@ -7,9 +7,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.day_log.DayLogWithFoodsModel
-import com.averito.firito.ui.screens.journal.DayLogListFilter
+import com.averito.firito.ui.shared.utils.range_filter.DaysListFilter
 import com.averito.firito.ui.screens.journal.JournalTab
-import com.averito.firito.ui.screens.journal.LogRange
+import com.averito.firito.ui.shared.utils.range_filter.RangeFilter
 import java.time.LocalDate
 
 @Composable
@@ -22,10 +22,10 @@ fun JournalScreenContent(
     selectedDate: LocalDate,
     onSelectDate: (LocalDate) -> Unit,
     onSelectMonthOrYear: (LocalDate) -> Unit,
-    dayLogListFilter: DayLogListFilter,
-    updateDayLogListFilter: (DayLogListFilter) -> Unit,
+    dayLogListFilter: DaysListFilter,
+    updateDayLogListFilter: (DaysListFilter) -> Unit,
     toDayLogDetails: (LocalDate) -> Unit,
-    loadDayLogsWithFoods: (LogRange) -> Unit
+    loadDayLogsWithFoods: (RangeFilter) -> Unit
 ) {
     val tabs = JournalTab.all
     val selectedTab = tabs[selectedTabIndex]

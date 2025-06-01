@@ -1,4 +1,4 @@
-package com.averito.firito.ui.shared.app_linear_progress_inidicator
+package com.averito.firito.ui.shared.ui.app_linear_progress_inidicator
 
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme

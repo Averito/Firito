@@ -1,4 +1,4 @@
-package com.averito.firito.ui.shared.app_food_card
+package com.averito.firito.ui.shared.ui.app_food_card
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

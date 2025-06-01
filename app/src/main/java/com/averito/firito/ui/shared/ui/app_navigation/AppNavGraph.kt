@@ -1,4 +1,4 @@
-package com.averito.firito.ui.shared.app_navigation
+package com.averito.firito.ui.shared.ui.app_navigation
 
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -30,13 +30,13 @@ fun AppNavGraph(
     BaseAppLayout(navController = navController) {
         NavHost(
             navController = navController,
-            startDestination = AppNavGraphRoutes.Main.route,
+            startDestination = AppNavGraphRoutes.Main.ROUTE,
             enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
             exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
             popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
         ) {
-            composable(AppNavGraphRoutes.Main.route) {
+            composable(AppNavGraphRoutes.Main.ROUTE) {
                 MainScreen(
                     baseAppLayoutViewModel = baseAppLayoutViewModel,
                     toFoodPage = { navController.navigate(AppNavGraphRoutes.MainFood.getRoute(it)) }
@@ -44,7 +44,7 @@ fun AppNavGraph(
             }
 
             composable(
-                route = AppNavGraphRoutes.MainFood.route,
+                route = AppNavGraphRoutes.MainFood.ROUTE,
                 arguments = listOf(navArgument("id") { type = NavType.LongType })
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getLong("id") ?: -1L
@@ -56,11 +56,11 @@ fun AppNavGraph(
                 )
             }
 
-            composable(AppNavGraphRoutes.Settings.route) {
+            composable(AppNavGraphRoutes.Settings.ROUTE) {
                 SettingsScreen(baseAppLayoutViewModel = baseAppLayoutViewModel)
             }
 
-            composable(AppNavGraphRoutes.Journal.route) {
+            composable(AppNavGraphRoutes.Journal.ROUTE) {
                 JournalScreen(
                     baseAppLayoutViewModel = baseAppLayoutViewModel,
                     toDayLogDetails = { navController.navigate(AppNavGraphRoutes.JournalDetails.getRoute(it.toEpochDay())) }
@@ -68,7 +68,7 @@ fun AppNavGraph(
             }
 
             composable(
-                route = AppNavGraphRoutes.JournalDetails.route,
+                route = AppNavGraphRoutes.JournalDetails.ROUTE,
                 arguments = listOf(navArgument("date") { type = NavType.LongType })
             ) { backStackEntry ->
                 val dateInMillis = backStackEntry.arguments?.getLong("date") ?: LocalDate.now().toEpochDay()

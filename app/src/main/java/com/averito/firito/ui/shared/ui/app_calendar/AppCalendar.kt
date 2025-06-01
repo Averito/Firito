@@ -1,4 +1,4 @@
-package com.averito.firito.ui.shared.app_calendar
+package com.averito.firito.ui.shared.ui.app_calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
