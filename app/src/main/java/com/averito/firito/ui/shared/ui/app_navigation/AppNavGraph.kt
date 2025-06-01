@@ -19,6 +19,7 @@ import com.averito.firito.ui.screens.journal.JournalScreen
 import com.averito.firito.ui.screens.journal_details.JournalDetailsScreen
 import com.averito.firito.ui.screens.main.MainScreen
 import com.averito.firito.ui.screens.settings.SettingsScreen
+import com.averito.firito.ui.screens.statistics.StatisticsScreen
 import java.time.LocalDate
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -79,6 +80,13 @@ fun AppNavGraph(
                     date = date,
                     baseAppLayoutViewModel = baseAppLayoutViewModel,
                     back = { navController.popBackStack() }
+                )
+            }
+
+            composable(AppNavGraphRoutes.Statistics.ROUTE) {
+                StatisticsScreen(
+                    baseAppLayoutViewModel = baseAppLayoutViewModel,
+                    toStatisticsDetail = { navController.navigate(AppNavGraphRoutes.StatisticsCategory.getRoute(it)) }
                 )
             }
         }
