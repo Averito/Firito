@@ -1,6 +1,5 @@
 package com.averito.firito.ui.screens.statistics
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.averito.firito.core.interactors.StatisticsInteractor

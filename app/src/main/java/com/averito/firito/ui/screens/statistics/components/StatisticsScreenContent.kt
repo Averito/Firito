@@ -30,7 +30,7 @@ fun StatisticsScreenContent(
     selectedDate: YearMonth,
     macroStats: MacroStats,
     updateDate: (YearMonth) -> Unit,
-    toStatisticsDetail: (AppNavGraphRoutes.StatisticsCategory.CATEGORY) -> Unit
+    toStatisticsDetail: (AppNavGraphRoutes.StatisticsCategory.Category) -> Unit
 ) {
     val isEmptyStats = macroStats.proteins <= 0f && macroStats.fats <= 0f && macroStats.carbs <= 0f
 
@@ -182,13 +182,13 @@ fun StatisticsScreenContent(
                 StatisticsCategoryListItem(
                     title = "Активность",
                     subtitle = "Шаги и расстояние",
-                    onClick = { toStatisticsDetail(AppNavGraphRoutes.StatisticsCategory.CATEGORY.ACTIVITY) }
+                    onClick = { toStatisticsDetail(AppNavGraphRoutes.StatisticsCategory.Category.ACTIVITY) }
                 )
                 HorizontalDivider(modifier = Modifier.height(1.dp))
                 StatisticsCategoryListItem(
                     title = "Калории и БЖУ",
                     subtitle = "Потреблённые калории, белки, жиры и углеводы",
-                    onClick = { toStatisticsDetail(AppNavGraphRoutes.StatisticsCategory.CATEGORY.CALORIES) }
+                    onClick = { toStatisticsDetail(AppNavGraphRoutes.StatisticsCategory.Category.CALORIES) }
                 )
                 HorizontalDivider(modifier = Modifier.height(1.dp))
             }

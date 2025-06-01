@@ -20,6 +20,7 @@ import com.averito.firito.ui.screens.journal_details.JournalDetailsScreen
 import com.averito.firito.ui.screens.main.MainScreen
 import com.averito.firito.ui.screens.settings.SettingsScreen
 import com.averito.firito.ui.screens.statistics.StatisticsScreen
+import com.averito.firito.ui.screens.statistics_category.StatisticsCategoryScreen
 import java.time.LocalDate
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -74,7 +75,6 @@ fun AppNavGraph(
             ) { backStackEntry ->
                 val dateInMillis = backStackEntry.arguments?.getLong("date") ?: LocalDate.now().toEpochDay()
                 val date = LocalDate.ofEpochDay(dateInMillis)
-                Log.d("DefaultAppLogger", "$dateInMillis - $date")
 
                 JournalDetailsScreen(
                     date = date,
@@ -87,6 +87,19 @@ fun AppNavGraph(
                 StatisticsScreen(
                     baseAppLayoutViewModel = baseAppLayoutViewModel,
                     toStatisticsDetail = { navController.navigate(AppNavGraphRoutes.StatisticsCategory.getRoute(it)) }
+                )
+            }
+
+            composable(
+                route = AppNavGraphRoutes.StatisticsCategory.ROUTE,
+                arguments = listOf(navArgument("category") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val category = AppNavGraphRoutes.StatisticsCategory.fromRouteParam(backStackEntry.arguments?.getString("category") ?: "")
+
+                StatisticsCategoryScreen(
+                    category = category,
+                    baseAppLayoutViewModel = baseAppLayoutViewModel,
+                    back = { navController.popBackStack() }
                 )
             }
         }

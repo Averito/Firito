@@ -16,7 +16,7 @@ import java.time.YearMonth
 fun StatisticsScreen(
     viewModel: StatisticsScreenViewModel = hiltViewModel(),
     baseAppLayoutViewModel: BaseAppLayoutViewModel,
-    toStatisticsDetail: (AppNavGraphRoutes.StatisticsCategory.CATEGORY) -> Unit
+    toStatisticsDetail: (AppNavGraphRoutes.StatisticsCategory.Category) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
