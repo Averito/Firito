@@ -67,4 +67,30 @@ sealed class AppNavGraphRoutes {
             return Category.entries.firstOrNull { it.name.equals(value, ignoreCase = true) } ?: Category.ACTIVITY
         }
     }
+
+    object GoalsCategory {
+        enum class Category {
+            ACTIVITY,
+            CALORIES
+        }
+
+        const val ROUTE = "goals/{category}"
+        const val TITLE = "Цели {category}"
+
+        fun getRoute(category: Category): String {
+            return ROUTE.replace("{category}", category.name.lowercase())
+        }
+
+        fun getTitle(category: Category): String {
+            val categoryStr = when (category) {
+                Category.CALORIES -> "калорий и БЖУ"
+                Category.ACTIVITY -> "активности"
+            }
+            return TITLE.replace("{category}", categoryStr)
+        }
+
+        fun fromRouteParam(value: String): Category {
+            return Category.entries.firstOrNull { it.name.equals(value, ignoreCase = true) } ?: Category.ACTIVITY
+        }
+    }
 }

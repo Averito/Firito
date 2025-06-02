@@ -4,7 +4,7 @@ import com.averito.firito.core.interactors.FoodInteractor
 import com.averito.firito.core.repositories.FoodRepository
 import com.averito.firito.core.services.FoodService
 import com.averito.firito.core.utils.AppLogger
-import com.averito.firito.data.daos.FoodDao
+import com.averito.firito.data.database.daos.FoodDao
 import com.averito.firito.data.interactors.food.FoodInteractorImpl
 import com.averito.firito.data.repositories.food.FoodRepositoryImpl
 import com.averito.firito.data.services.food.FoodServiceImpl

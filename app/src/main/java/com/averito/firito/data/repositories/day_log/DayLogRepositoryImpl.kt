@@ -3,7 +3,7 @@ package com.averito.firito.data.repositories.day_log
 import com.averito.firito.core.models.day_log.DayLogModel
 import com.averito.firito.core.models.day_log.DayLogWithFoodsModel
 import com.averito.firito.core.repositories.DayLogRepository
-import com.averito.firito.data.daos.DayLogDao
+import com.averito.firito.data.database.daos.DayLogDao
 import com.averito.firito.data.mappers.toEntity
 import java.time.LocalDate
 import javax.inject.Inject

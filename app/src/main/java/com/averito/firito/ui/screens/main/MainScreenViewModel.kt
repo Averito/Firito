@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.averito.firito.core.interactors.DayLogInteractor
 import com.averito.firito.core.interactors.FoodInteractor
+import com.averito.firito.core.interactors.GoalsInteractor
 import com.averito.firito.core.models.food.FoodModel
 import com.averito.firito.data.managers.HealthConnectManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val dayLogInteractor: DayLogInteractor,
     private val foodInteractor: FoodInteractor,
+    private val goalsInteractor: GoalsInteractor,
     private val healthConnectManager: HealthConnectManager
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MainScreenUiState())
@@ -46,7 +48,13 @@ class MainScreenViewModel @Inject constructor(
         viewModelScope.launch {
             dayLogInteractor.updateCurrently()
             loadDayLogWithFoodsInternal()
+            loadGoalsModel()
         }
+    }
+
+    private suspend fun loadGoalsModel() {
+        val goals = goalsInteractor.getAll()
+        _uiState.value = _uiState.value.copy(goals = goals)
     }
 
     private suspend fun loadDayLogWithFoodsInternal() {

@@ -1,4 +1,4 @@
-package com.averito.firito.data.daos
+package com.averito.firito.data.database.daos
 
 import com.averito.firito.data.models.day_log.DayLogWithFoodsEntity
 import androidx.room.Dao

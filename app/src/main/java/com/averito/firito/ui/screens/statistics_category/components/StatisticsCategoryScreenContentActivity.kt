@@ -1,5 +1,6 @@
 package com.averito.firito.ui.screens.statistics_category.components
 
+import android.R
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -13,26 +14,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.averito.firito.core.models.goals.GoalsModel
 import com.averito.firito.core.models.statistics.ActivityDiff
 import com.averito.firito.core.models.statistics.ActivityStats
 import com.averito.firito.core.models.statistics.StatValue
+import com.averito.firito.data.models.statistics.StatValueImpl
 import ir.ehsannarmani.compose_charts.models.DotProperties
 import ir.ehsannarmani.compose_charts.models.Line
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun StatisticsCategoryScreenContentActivity(activityStats: ActivityStats, activityDiff: ActivityDiff) {
+fun StatisticsCategoryScreenContentActivity(
+    activityStats: ActivityStats,
+    activityDiff: ActivityDiff,
+    goals: GoalsModel
+) {
     val primary = MaterialTheme.colorScheme.primary
     val surface = MaterialTheme.colorScheme.surface
     val tertiary = MaterialTheme.colorScheme.tertiary
+    val goalLineColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
 
-    fun <T : Number> createLine(label: String, color: Color, items: List<StatValue<T>>): Line {
+    fun <T : Number> createLine(label: String, color: Color, items: List<StatValue<T>>, isGoal: Boolean = false): Line {
         return Line(
             values = items.map { it.value.toDouble() },
             color = SolidColor(color),
             label = label,
-            curvedEdges = items.size < 15,
-            dotProperties = DotProperties(
+            curvedEdges = if (isGoal) false else items.size < 15,
+            dotProperties = if (isGoal) null else DotProperties(
                 enabled = true,
                 radius = 2.dp,
                 strokeWidth = 2.dp,
@@ -44,19 +52,63 @@ fun StatisticsCategoryScreenContentActivity(activityStats: ActivityStats, activi
 
     var stepsData by remember {
         mutableStateOf(
-            listOf(createLine("Шаги", primary, activityStats.steps))
+            buildList {
+                add(createLine("Шаги", primary, activityStats.steps))
+                if (goals.steps > 0) {
+                    val goalLine = createLine(
+                        label = "Цель",
+                        color = goalLineColor,
+                        items = activityStats.steps.map { StatValueImpl(date = it.date, value = goals.steps) },
+                        isGoal = true
+                    )
+                    add(goalLine)
+                }
+            }
         )
     }
 
     var distanceData by remember {
         mutableStateOf(
-            listOf(createLine("Расстояние (км)", tertiary, activityStats.distance))
+            buildList {
+                add(createLine("Расстояние (км)", tertiary, activityStats.distance))
+                if (goals.distance > 0) {
+                    val goalLine = createLine(
+                        label = "Цель",
+                        color = goalLineColor,
+                        items = activityStats.distance.map { StatValueImpl(date = it.date, value = goals.distance) },
+                        isGoal = true
+                    )
+                    add(goalLine)
+                }
+            }
         )
     }
 
     LaunchedEffect(activityStats) {
-        stepsData = listOf(createLine("Шаги", primary, activityStats.steps))
-        distanceData = listOf(createLine("Расстояние (км)", tertiary, activityStats.distance))
+        stepsData = buildList {
+            add(createLine("Шаги", primary, activityStats.steps))
+            if (goals.steps > 0) {
+                val goalLine = createLine(
+                    label = "Цель",
+                    color = goalLineColor,
+                    items = activityStats.steps.map { StatValueImpl(date = it.date, value = goals.steps) },
+                    isGoal = true
+                )
+                add(goalLine)
+            }
+        }
+        distanceData = buildList {
+            add(createLine("Расстояние (км)", tertiary, activityStats.distance))
+            if (goals.distance > 0) {
+                val goalLine = createLine(
+                    label = "Цель",
+                    color = goalLineColor,
+                    items = activityStats.distance.map { StatValueImpl(date = it.date, value = goals.distance) },
+                    isGoal = true
+                )
+                add(goalLine)
+            }
+        }
     }
 
     StatChartBlock(

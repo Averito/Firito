@@ -1,4 +1,4 @@
-package com.averito.firito.data.daos
+package com.averito.firito.data.database.daos
 
 import androidx.room.Dao
 import androidx.room.Delete
