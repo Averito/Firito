@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.averito.firito.core.models.statistics.MacroDiff
 import com.averito.firito.core.models.statistics.MacroStats
 import com.averito.firito.ui.shared.ui.app_month_selector.AppMonthSelector
 import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
@@ -29,6 +30,7 @@ import java.time.YearMonth
 fun StatisticsScreenContent(
     selectedDate: YearMonth,
     macroStats: MacroStats,
+    macroDiff: MacroDiff,
     updateDate: (YearMonth) -> Unit,
     toStatisticsDetail: (AppNavGraphRoutes.StatisticsCategory.Category) -> Unit
 ) {
@@ -130,6 +132,16 @@ fun StatisticsScreenContent(
                             val total = data.sumOf { it.data }
                             val selected = data.firstOrNull { it.selected }
                             val percent = selected?.let { (it.data / total * 100).toInt() } ?: 0
+                            val diffText = selected?.label?.let { label ->
+                                val diffValue = when (label) {
+                                    "Белки" -> macroDiff.proteins
+                                    "Жиры" -> macroDiff.fats
+                                    "Углеводы" -> macroDiff.carbs
+                                    else -> null
+                                }
+
+                                diffValue?.takeIf { it != 0 }?.let { ", $it%" } ?: ""
+                            } ?: ""
 
                             Surface(
                                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
@@ -137,7 +149,7 @@ fun StatisticsScreenContent(
                                 tonalElevation = 4.dp
                             ) {
                                 Text(
-                                    text = selected?.let { "${it.label}: ${it.data.toInt()} г ($percent%)" } ?: "Нажмите на сектор",
+                                    text = selected?.let { "${it.label}: ${it.data.toInt()} г ($percent%$diffText)" } ?: "Нажмите на сектор",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier

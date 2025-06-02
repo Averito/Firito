@@ -23,8 +23,9 @@ class StatisticsScreenViewModel @Inject constructor(
 
     fun updateStatistics() {
         viewModelScope.launch {
-            val macroStats = statisticsInteractor.getMacrosForMonth(_uiState.value.selectedDate)
-            _uiState.value = _uiState.value.copy(macroStats = macroStats)
+            val macroStats = statisticsInteractor.getMacroForMonth(_uiState.value.selectedDate)
+            val macroDiff = statisticsInteractor.getMacroDiffForMonth(_uiState.value.selectedDate)
+            _uiState.value = _uiState.value.copy(macroStats = macroStats, macroDiff = macroDiff)
         }
     }
 }

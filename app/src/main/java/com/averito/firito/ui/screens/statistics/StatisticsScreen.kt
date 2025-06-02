@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.averito.firito.data.models.statistics.MacroDiffImpl
 import com.averito.firito.data.models.statistics.MacroStatsImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.statistics.components.StatisticsScreenContent
@@ -38,6 +39,7 @@ fun StatisticsScreen(
     StatisticsScreenContent(
         selectedDate = uiState.selectedDate,
         macroStats = uiState.macroStats,
+        macroDiff = uiState.macroDiff,
         updateDate = { updateDate(it) },
         toStatisticsDetail = { toStatisticsDetail(it) }
     )
@@ -49,6 +51,7 @@ fun StatisticsScreenPreview() {
     StatisticsScreenContent(
         selectedDate = YearMonth.now(),
         macroStats = MacroStatsImpl(),
+        macroDiff = MacroDiffImpl(),
         updateDate = {},
         toStatisticsDetail = {}
     )

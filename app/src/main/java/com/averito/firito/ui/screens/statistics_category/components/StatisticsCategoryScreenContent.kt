@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.averito.firito.core.models.statistics.ActivityDiff
 import com.averito.firito.core.models.statistics.ActivityStats
+import com.averito.firito.core.models.statistics.CaloriesDiff
 import com.averito.firito.core.models.statistics.CaloriesStats
 import com.averito.firito.ui.shared.ui.app_month_selector.AppMonthSelector
 import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
@@ -19,7 +21,9 @@ fun StatisticsCategoryScreenContent(
     selectedDate: YearMonth,
     updateDate: (YearMonth) -> Unit,
     activityStats: ActivityStats,
+    activityDiff: ActivityDiff,
     caloriesStats: CaloriesStats,
+    caloriesDiff: CaloriesDiff,
     category: AppNavGraphRoutes.StatisticsCategory.Category,
     hasData: Boolean
 ) {
@@ -62,13 +66,13 @@ fun StatisticsCategoryScreenContent(
         when (category) {
             AppNavGraphRoutes.StatisticsCategory.Category.ACTIVITY -> {
                 item {
-                    StatisticsCategoryScreenContentActivity(activityStats)
+                    StatisticsCategoryScreenContentActivity(activityStats, activityDiff)
                 }
             }
 
             AppNavGraphRoutes.StatisticsCategory.Category.CALORIES -> {
                 item {
-                    StatisticsCategoryScreenContentCalories(caloriesStats)
+                    StatisticsCategoryScreenContentCalories(caloriesStats, caloriesDiff)
                 }
             }
         }
