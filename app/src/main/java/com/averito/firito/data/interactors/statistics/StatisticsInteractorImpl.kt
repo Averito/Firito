@@ -14,6 +14,7 @@ import com.averito.firito.data.models.statistics.ActivityStatsImpl
 import com.averito.firito.data.models.statistics.CaloriesStatsImpl
 import com.averito.firito.data.models.statistics.MacroStatsImpl
 import com.averito.firito.data.models.statistics.StatSeriesImpl
+import com.averito.firito.data.models.statistics.StatValueImpl
 import com.averito.firito.di.qualifiers.DefaultAppLogger
 import java.time.YearMonth
 import javax.inject.Inject
@@ -26,7 +27,7 @@ class StatisticsInteractorImpl @Inject constructor(
 
     override suspend fun getMacrosForMonth(date: YearMonth): MacroStats {
         defaultAppLogger.debug("$name: Получение статистики макронутриенов.")
-        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth())
+        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth()).asReversed()
         val dayLogs = dayLogsWithFood.map { it.dayLog }
 
         return MacroStatsImpl(
@@ -38,38 +39,44 @@ class StatisticsInteractorImpl @Inject constructor(
 
     override suspend fun getActivityForMonth(date: YearMonth): ActivityStats {
         defaultAppLogger.debug("$name: Получение статистики активности.")
-        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth())
+        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth()).asReversed()
 
-        val steps = dayLogsWithFood.map { it.dayLog.totalSteps }
-        val distance = dayLogsWithFood.map { it.dayLog.totalDistanceKm }
+        val steps = dayLogsWithFood.map { StatValueImpl<Int>(value = it.dayLog.totalSteps, date = it.dayLog.date) }
+        val stepsOnlyValues = steps.map { it.value }
+        val distance = dayLogsWithFood.map { StatValueImpl<Double>(value = it.dayLog.totalDistanceKm, date = it.dayLog.date) }
+        val distanceOnlyValues = distance.map { it.value }
 
         return ActivityStatsImpl(
             steps = steps,
             distance = distance,
 
             stepsStats = StatSeriesImpl(
-                min = steps.safeMin(),
-                avg = steps.safeAverage(),
-                max = steps.safeMax()
+                min = stepsOnlyValues.safeMin(),
+                avg = stepsOnlyValues.safeAverage(),
+                max = stepsOnlyValues.safeMax()
             ),
 
             distanceStats = StatSeriesImpl(
-                min = distance.safeMin(),
-                avg = distance.safeAverage(),
-                max = distance.safeMax()
+                min = distanceOnlyValues.safeMin(),
+                avg = distanceOnlyValues.safeAverage(),
+                max = distanceOnlyValues.safeMax()
             ),
         )
     }
 
     override suspend fun getCaloriesForMonth(date: YearMonth): CaloriesStats {
         defaultAppLogger.debug("$name: Получение статистики калорий и БЖУ.")
-        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth())
+        val dayLogsWithFood = dayLogService.getWithFoodsByRangeDate(date.atDay(1), date.atEndOfMonth()).asReversed()
         val dayLogs = dayLogsWithFood.map { it.dayLog }
 
-        val calories = dayLogs.map { it.totalCalories }
-        val proteins = dayLogs.map { it.totalProteins }
-        val fats = dayLogs.map { it.totalFats }
-        val carbs = dayLogs.map { it.totalCarbs }
+        val calories = dayLogs.map { StatValueImpl<Int>(value = it.totalCalories, date = it.date) }
+        val caloriesOnlyValues = calories.map { it.value }
+        val proteins = dayLogs.map { StatValueImpl<Float>(value = it.totalProteins, date = it.date) }
+        val proteinsOnlyValues = proteins.map { it.value }
+        val fats = dayLogs.map { StatValueImpl<Float>(value = it.totalFats, date = it.date) }
+        val fatsOnlyValues = fats.map { it.value }
+        val carbs = dayLogs.map { StatValueImpl<Float>(value = it.totalCarbs, date = it.date) }
+        val carbsOnlyValues = carbs.map { it.value }
 
         return CaloriesStatsImpl(
             calories = calories,
@@ -78,27 +85,27 @@ class StatisticsInteractorImpl @Inject constructor(
             carbs = carbs,
 
             caloriesStats = StatSeriesImpl(
-                min = calories.safeMin(),
-                avg = calories.safeAverage(),
-                max = calories.safeMax()
+                min = caloriesOnlyValues.safeMin(),
+                avg = caloriesOnlyValues.safeAverage(),
+                max = caloriesOnlyValues.safeMax()
             ),
 
             proteinsStats = StatSeriesImpl(
-                min = proteins.safeMin(),
-                avg = proteins.safeAverage(),
-                max = proteins.safeMax()
+                min = proteinsOnlyValues.safeMin(),
+                avg = proteinsOnlyValues.safeAverage(),
+                max = proteinsOnlyValues.safeMax()
             ),
 
             fatsStats = StatSeriesImpl(
-                min = fats.safeMin(),
-                avg = fats.safeAverage(),
-                max = fats.safeMax()
+                min = fatsOnlyValues.safeMin(),
+                avg = fatsOnlyValues.safeAverage(),
+                max = fatsOnlyValues.safeMax()
             ),
 
             carbsStats = StatSeriesImpl(
-                min = carbs.safeMin(),
-                avg = carbs.safeAverage(),
-                max = carbs.safeMax()
+                min = carbsOnlyValues.safeMin(),
+                avg = carbsOnlyValues.safeAverage(),
+                max = carbsOnlyValues.safeMax()
             ),
         )
     }
