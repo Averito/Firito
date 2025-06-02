@@ -85,4 +85,7 @@ dependencies {
     // Calendar
     implementation(libs.composecalendar)
     implementation(libs.kotlinx.datetime)
+
+    // Charts
+    implementation(libs.compose.charts)
 }

@@ -1,6 +1,6 @@
 package com.averito.firito.ui.layouts.base
 
-import com.averito.firito.ui.shared.app_bottom_bar.DefaultAppBottomBar
+import com.averito.firito.ui.shared.ui.app_bottom_bar.DefaultAppBottomBar
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.Surface
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.averito.firito.ui.shared.app_top_bar.DefaultAppTopBar
+import com.averito.firito.ui.shared.ui.app_top_bar.DefaultAppTopBar
 
 @Composable
 fun BaseAppLayout(

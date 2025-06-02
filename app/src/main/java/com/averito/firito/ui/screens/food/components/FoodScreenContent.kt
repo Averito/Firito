@@ -11,9 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.food.FoodModel
-import com.averito.firito.data.models.food.FoodModelImpl
 import com.averito.firito.ui.screens.food.FoodScreenUiStateFood
-import com.averito.firito.ui.shared.app_food_card.AppFoodCard
+import com.averito.firito.ui.shared.ui.app_food_card.AppFoodCard
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -6,7 +6,6 @@ import java.time.LocalDate
 
 interface DayLogInteractor {
     suspend fun updateCurrently(): Unit
-    suspend fun ensureDayLogExists(date: LocalDate = LocalDate.now()): DayLogModel
     suspend fun finalizeDayLog(): DayLogModel
     suspend fun getCurrentlyWithFoods(): DayLogWithFoodsModel
     suspend fun getWithFoodsByDate(date: LocalDate): DayLogWithFoodsModel?

@@ -15,7 +15,7 @@ import com.averito.firito.data.models.day_log.DayLogWithFoodsModelImpl
 import com.averito.firito.data.models.food.FoodModelImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.journal_details.components.JournalDetailsContent
-import com.averito.firito.ui.shared.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
 import java.time.LocalDate
 
 @Composable
@@ -28,7 +28,7 @@ fun JournalDetailsScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.JournalDetails.title)
+        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.JournalDetails.TITLE)
         baseAppLayoutViewModel.setTopBarVisibility(true)
         baseAppLayoutViewModel.setBottomBarVisibility(false)
         baseAppLayoutViewModel.setFloatingButton(null)

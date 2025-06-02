@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.day_log.DayLogWithFoodsModel
 import com.averito.firito.data.models.day_log.DayLogWithFoodsModelImpl
-import com.averito.firito.ui.shared.app_food_card.AppFoodCard
+import com.averito.firito.ui.shared.ui.app_food_card.AppFoodCard
 import java.time.LocalDate
 
 @Composable

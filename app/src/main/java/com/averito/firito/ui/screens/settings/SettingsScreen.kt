@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.settings.components.SettingsScreenContent
-import com.averito.firito.ui.shared.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
 
 @Composable
 fun SettingsScreen(
@@ -47,7 +47,7 @@ fun SettingsScreen(
 
 
     LaunchedEffect(Unit) {
-        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Settings.title)
+        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Settings.TITLE)
         baseAppLayoutViewModel.setTopBarVisibility(true)
         baseAppLayoutViewModel.setBottomBarVisibility(true)
         baseAppLayoutViewModel.setFloatingButton(null)

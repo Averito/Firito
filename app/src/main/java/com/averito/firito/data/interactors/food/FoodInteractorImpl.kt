@@ -1,6 +1,5 @@
 package com.averito.firito.data.interactors.food
 
-import androidx.compose.ui.text.toLowerCase
 import com.averito.firito.core.interactors.FoodInteractor
 import com.averito.firito.core.models.food.FoodModel
 import com.averito.firito.core.services.FoodService

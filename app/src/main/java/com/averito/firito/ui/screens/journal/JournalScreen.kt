@@ -11,7 +11,9 @@ import com.averito.firito.data.models.day_log.DayLogWithFoodsModelImpl
 import com.averito.firito.data.models.food.FoodModelImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.journal.components.JournalScreenContent
-import com.averito.firito.ui.shared.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
+import com.averito.firito.ui.shared.utils.range_filter.DaysListFilter
+import com.averito.firito.ui.shared.utils.range_filter.RangeFilter
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -26,11 +28,11 @@ fun JournalScreen(
 
     fun onSelectMonthOrYear(date: LocalDate) {
         coroutineScope.launch {
-            viewModel.loadDayLogsWithFoods(LogRange.Month(date))
+            viewModel.loadDayLogsWithFoods(RangeFilter.Month(date))
         }
     }
 
-    fun loadDayLogsWithFoods(logRange: LogRange) {
+    fun loadDayLogsWithFoods(logRange: RangeFilter) {
         coroutineScope.launch {
             viewModel.loadDayLogsWithFoods(logRange)
         }
@@ -41,7 +43,7 @@ fun JournalScreen(
     }
 
     LaunchedEffect(Unit) {
-        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Journal.title)
+        baseAppLayoutViewModel.setTitle(AppNavGraphRoutes.Journal.TITLE)
         baseAppLayoutViewModel.setTopBarVisibility(true)
         baseAppLayoutViewModel.setBottomBarVisibility(true)
         baseAppLayoutViewModel.setActions(null)
@@ -83,7 +85,7 @@ fun JournalScreenPreview() {
         activeDates = emptySet(),
         updateSelectedTab = {},
         loadDayLogsWithFoods = {},
-        dayLogListFilter = DayLogListFilter.Last7Days,
+        dayLogListFilter = DaysListFilter.Last7Days,
         updateDayLogListFilter = {}
     )
 }

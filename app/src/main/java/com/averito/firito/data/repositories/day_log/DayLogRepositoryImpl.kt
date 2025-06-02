@@ -9,22 +9,22 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class DayLogRepositoryImpl @Inject constructor(private val dayLogDao: DayLogDao) : DayLogRepository {
-    override suspend fun getByMonthYear(
-        month: Int,
-        year: Int
-    ): Result<List<DayLogModel>> {
+    override suspend fun getWithFoodsByDate(date: LocalDate): Result<DayLogWithFoodsModel?> {
         try {
-            val dayLogs = dayLogDao.getByMonthYear("%02d".format(month), year.toString())
-            return Result.success(dayLogs)
+            val dayLogWithFoods = dayLogDao.getWithFoodsByDate(date)
+            return Result.success(dayLogWithFoods)
         } catch (error: Exception) {
             return Result.failure(error)
         }
     }
 
-    override suspend fun getByDate(date: LocalDate): Result<DayLogModel?> {
+    override suspend fun getWithFoodsByRangeDate(
+        from: LocalDate,
+        to: LocalDate
+    ): Result<List<DayLogWithFoodsModel>> {
         try {
-            val dayLog = dayLogDao.getByDate(date)
-            return Result.success(dayLog)
+            val dayLogsWithFoods = dayLogDao.getDayLogsWithFoodsBetween(from, to)
+            return Result.success(dayLogsWithFoods)
         } catch (error: Exception) {
             return Result.failure(error)
         }
@@ -43,27 +43,6 @@ class DayLogRepositoryImpl @Inject constructor(private val dayLogDao: DayLogDao)
         try {
             dayLogDao.update(dayLog.toEntity())
             return Result.success(Unit)
-        } catch (error: Exception) {
-            return Result.failure(error)
-        }
-    }
-
-    override suspend fun getWithFoodsByDate(date: LocalDate): Result<DayLogWithFoodsModel?> {
-        try {
-            val dayLogWithFoods = dayLogDao.getWithFoodsByDate(date)
-            return Result.success(dayLogWithFoods)
-        } catch (error: Exception) {
-            return Result.failure(error)
-        }
-    }
-
-    override suspend fun getWithFoodsByRangeDate(
-        from: LocalDate,
-        to: LocalDate
-    ): Result<List<DayLogWithFoodsModel>> {
-        try {
-            val dayLogsWithFoods = dayLogDao.getDayLogsWithFoodsBetween(from, to)
-            return Result.success(dayLogsWithFoods)
         } catch (error: Exception) {
             return Result.failure(error)
         }

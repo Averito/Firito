@@ -26,22 +26,11 @@ class DayLogInteractorImpl @Inject constructor(
         updateByDate(LocalDateTime.now())
     }
 
-    override suspend fun ensureDayLogExists(date: LocalDate): DayLogModel {
-        val currently = dayLogService.getByDate(date)
-        if (currently != null) return currently
-        defaultAppLogger.info("$name: ensureDayLogExists: Дневной лог не существует - создаю новый.")
-
-        val newDayLog = DayLogModelImpl()
-
-        dayLogService.create(newDayLog)
-        return newDayLog
-    }
-
     override suspend fun finalizeDayLog(): DayLogModel {
         val currently = ensureDayLogExists(LocalDate.now())
-        val previouslyLog = dayLogService.getByDate(LocalDate.now().minusDays(1))
+        val previouslyLogWithFood = dayLogService.getWithFoodsByDate(LocalDate.now().minusDays(1))
 
-        if (previouslyLog == null || previouslyLog.finalAt != null) {
+        if (previouslyLogWithFood == null || previouslyLogWithFood.dayLog.finalAt != null) {
             dayLogService.update(DayLogModelImpl(
                 date = currently.date,
                 totalSteps = currently.totalSteps,
@@ -57,14 +46,14 @@ class DayLogInteractorImpl @Inject constructor(
         }
 
         dayLogService.update(DayLogModelImpl(
-            date = previouslyLog.date,
-            totalSteps = previouslyLog.totalSteps,
-            totalDistanceKm = previouslyLog.totalDistanceKm,
-            totalCarbs = previouslyLog.totalCarbs,
-            totalProteins = previouslyLog.totalProteins,
-            totalCalories = previouslyLog.totalCalories,
-            totalFats = previouslyLog.totalFats,
-            activeCalories = previouslyLog.activeCalories,
+            date = previouslyLogWithFood.dayLog.date,
+            totalSteps = previouslyLogWithFood.dayLog.totalSteps,
+            totalDistanceKm = previouslyLogWithFood.dayLog.totalDistanceKm,
+            totalCarbs = previouslyLogWithFood.dayLog.totalCarbs,
+            totalProteins = previouslyLogWithFood.dayLog.totalProteins,
+            totalCalories = previouslyLogWithFood.dayLog.totalCalories,
+            totalFats = previouslyLogWithFood.dayLog.totalFats,
+            activeCalories = previouslyLogWithFood.dayLog.activeCalories,
             finalAt = LocalDateTime.now()
         ))
 
@@ -72,7 +61,7 @@ class DayLogInteractorImpl @Inject constructor(
     }
 
     override suspend fun getCurrentlyWithFoods(): DayLogWithFoodsModel {
-        val dayLog = ensureDayLogExists()
+        val dayLog = ensureDayLogExists(LocalDate.now())
         val dayLogWithFoods = dayLogService.getWithFoodsByDate(LocalDate.now())
 
         return dayLogWithFoods ?: DayLogWithFoodsModelImpl(dayLog = dayLog, foods = emptyList())
@@ -90,11 +79,24 @@ class DayLogInteractorImpl @Inject constructor(
         return dayLogService.getWithFoodsByRangeDate(from, to)
     }
 
+    private suspend fun ensureDayLogExists(date: LocalDate): DayLogModel {
+        val currently = dayLogService.getWithFoodsByDate(date)
+        if (currently != null) return currently.dayLog
+        defaultAppLogger.info("$name: ensureDayLogExists: Дневной лог не существует - создаю новый.")
+
+        val newDayLog = DayLogModelImpl()
+
+        dayLogService.create(newDayLog)
+        return newDayLog
+    }
+
     private suspend fun updateByDate(date: LocalDateTime) {
+        val log = ensureDayLogExists(date.toLocalDate())
         val foodByToday = foodInteractor.getByDate(date.toLocalDate())
         defaultAppLogger.debug("$name: updateByDate: Обновление данных лога $date. Еда: ${foodByToday}")
 
         dayLogService.update(DayLogModelImpl(
+            date = log.date,
             totalCalories = foodByToday.sumOf { it.weightInGrams.toDouble() / 100.0 * it.calories }.toInt(),
             totalFats = foodByToday.sumOf { it.weightInGrams.toDouble() / 100.0 * it.fats.toDouble() }.toFloat(),
             totalCarbs = foodByToday.sumOf { it.weightInGrams.toDouble() / 100.0 * it.carbs.toDouble() }.toFloat(),
