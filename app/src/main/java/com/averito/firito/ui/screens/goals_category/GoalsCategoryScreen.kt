@@ -1,5 +1,6 @@
 package com.averito.firito.ui.screens.goals_category
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -48,6 +49,10 @@ fun GoalsCategoryScreen(
 
     LaunchedEffect(Unit) {
         viewModel.loadGoals()
+    }
+
+    BackHandler {
+        saveAndBack()
     }
 
     GoalsCategoryContent(
