@@ -15,10 +15,11 @@ import com.averito.firito.ui.shared.ui.app_linear_progress_inidicator.AppLinearP
 
 @Composable
 fun AppActivityCard(steps: Int, distance: Double, stepsGoal: Int, distanceGoal: Double) {
-    val stepsExceeded = steps > stepsGoal
+    val stepsCompleted = steps >= stepsGoal
+    val distanceCompleted = distance >= distanceGoal
 
-    val distanceGoal = distanceGoal
-    val distanceExceeded = distance > distanceGoal
+    val successColor = MaterialTheme.colorScheme.tertiary
+    val defaultColor = MaterialTheme.colorScheme.primary
 
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -26,13 +27,16 @@ fun AppActivityCard(steps: Int, distance: Double, stepsGoal: Int, distanceGoal: 
             Spacer(Modifier.height(8.dp))
 
             if (stepsGoal > 0) {
-                Text("Шаги: $steps / $stepsGoal", color = if (stepsExceeded) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+                Text(
+                    "Шаги: $steps / $stepsGoal",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
                 Spacer(Modifier.height(4.dp))
                 AppLinearProgressIndicator(
                     currentValue = steps.toFloat(),
                     maxValue = stepsGoal.toFloat(),
                     modifier = Modifier.fillMaxWidth(),
-                    color = if (stepsExceeded) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                    color = if (stepsCompleted) successColor else defaultColor
                 )
                 Spacer(Modifier.height(12.dp))
             } else {
@@ -40,13 +44,16 @@ fun AppActivityCard(steps: Int, distance: Double, stepsGoal: Int, distanceGoal: 
             }
 
             if (distanceGoal > 0) {
-                Text("Дистанция: %.2f / %.2f км".format(distance, distanceGoal), color = if (distanceExceeded) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+                Text(
+                    "Дистанция: %.2f / %.2f км".format(distance, distanceGoal),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
                 Spacer(Modifier.height(4.dp))
                 AppLinearProgressIndicator(
                     currentValue = distance.toFloat(),
                     maxValue = distanceGoal.toFloat(),
                     modifier = Modifier.fillMaxWidth(),
-                    color = if (distanceExceeded) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                    color = if (distanceCompleted) successColor else defaultColor
                 )
             } else {
                 Text("Дистанция: %.2f км".format(distance))
