@@ -14,10 +14,40 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsScreenContent(
+    onActivityGoals: () -> Unit,
+    onCaloriesGoals: () -> Unit,
     onExportClick: () -> Unit,
     onImportClick: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
+        ListItem(
+            leadingContent = {
+                Icon(
+                    painter = painterResource(id = R.drawable.steps_24px),
+                    contentDescription = "Цели активности"
+                )
+            },
+            headlineContent = { Text("Цели активности") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onActivityGoals)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+        HorizontalDivider()
+        ListItem(
+            leadingContent = {
+                Icon(
+                    painter = painterResource(id = R.drawable.restaurant_24px),
+                    contentDescription = "Цели калорий и БЖУ"
+                )
+            },
+            headlineContent = { Text("Цели калорий и БЖУ") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onCaloriesGoals)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+        HorizontalDivider()
         ListItem(
             leadingContent = {Icon(painter = painterResource(id = R.drawable.upload_24px), contentDescription = "Экспорт") },
             headlineContent = { Text("Экспорт базы данных") },

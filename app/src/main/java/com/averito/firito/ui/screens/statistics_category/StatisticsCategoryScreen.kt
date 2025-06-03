@@ -10,6 +10,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.averito.firito.core.models.goals.GoalsModel
+import com.averito.firito.data.models.goals.GoalsModelImpl
 import com.averito.firito.data.models.statistics.ActivityDiffImpl
 import com.averito.firito.data.models.statistics.ActivityStatsImpl
 import com.averito.firito.data.models.statistics.CaloriesDiffImpl
@@ -42,7 +44,11 @@ fun StatisticsCategoryScreen(
             }
         }
         baseAppLayoutViewModel.setActions(null)
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.updateStatistics(category)
+        viewModel.loadGoals()
     }
 
     fun updateDate(date: YearMonth) {
@@ -53,6 +59,7 @@ fun StatisticsCategoryScreen(
     StatisticsCategoryScreenContent(
         selectedDate = uiState.selectedDate,
         updateDate = { updateDate(it) },
+        goals = uiState.goals,
         activityStats = uiState.activityStats,
         activityDiff = uiState.activityDiff,
         caloriesStats = uiState.caloriesStats,
@@ -120,6 +127,7 @@ fun StatisticsCategoryScreenPreview() {
 
     StatisticsCategoryScreenContent(
         selectedDate = YearMonth.now(),
+        goals = GoalsModelImpl(),
         updateDate = {},
         activityStats = activityStats,
         caloriesStats = caloriesStats,

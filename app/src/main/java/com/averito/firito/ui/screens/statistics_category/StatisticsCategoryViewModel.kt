@@ -2,6 +2,7 @@ package com.averito.firito.ui.screens.statistics_category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.averito.firito.core.interactors.GoalsInteractor
 import com.averito.firito.core.interactors.StatisticsInteractor
 import com.averito.firito.core.models.statistics.ActivityStats
 import com.averito.firito.core.models.statistics.CaloriesStats
@@ -17,13 +18,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StatisticsCategoryViewModel @Inject constructor(
-    private val statisticsInteractor: StatisticsInteractor
+    private val statisticsInteractor: StatisticsInteractor,
+    private val goalsInteractor: GoalsInteractor
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(StatisticsCategoryUiState())
     val uiState get() = _uiState.asStateFlow()
 
     fun updateDate(date: YearMonth) {
         _uiState.value = _uiState.value.copy(selectedDate = date)
+    }
+
+    fun loadGoals() {
+        viewModelScope.launch {
+            val goals = goalsInteractor.getAll()
+            _uiState.value = _uiState.value.copy(goals = goals)
+        }
     }
 
     fun updateStatistics(category: AppNavGraphRoutes.StatisticsCategory.Category) {

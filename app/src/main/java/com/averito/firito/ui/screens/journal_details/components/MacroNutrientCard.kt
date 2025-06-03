@@ -16,7 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MacroNutrientCard(name: String, value: Float, unit: String, color: Color) {
+fun MacroNutrientCard(name: String, value: Float, maxValue: Float, unit: String, color: Color) {
+    val exceeded = value > maxValue
+
+    val displayText = if (maxValue > 0f) {
+        "%.1f / %.1f $unit".format(value, maxValue)
+    } else {
+        "%.1f $unit".format(value)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,9 +47,9 @@ fun MacroNutrientCard(name: String, value: Float, unit: String, color: Color) {
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = "${"%.1f".format(value)} $unit",
+                text = displayText,
                 style = MaterialTheme.typography.bodyMedium,
-                color = color
+                color = if (exceeded && maxValue > 0f) MaterialTheme.colorScheme.error else color
             )
         }
     }

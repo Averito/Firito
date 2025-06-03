@@ -6,7 +6,7 @@ import com.averito.firito.core.repositories.DayLogRepository
 import com.averito.firito.core.services.DayLogService
 import com.averito.firito.core.services.HealthConnectService
 import com.averito.firito.core.utils.AppLogger
-import com.averito.firito.data.daos.DayLogDao
+import com.averito.firito.data.database.daos.DayLogDao
 import com.averito.firito.data.interactors.day_log.DayLogInteractorImpl
 import com.averito.firito.data.repositories.day_log.DayLogRepositoryImpl
 import com.averito.firito.data.services.daylog.DayLogServiceImpl

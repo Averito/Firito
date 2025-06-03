@@ -2,8 +2,8 @@ package com.averito.firito.di
 
 import android.content.Context
 import androidx.room.Room
-import com.averito.firito.data.daos.DayLogDao
-import com.averito.firito.data.daos.FoodDao
+import com.averito.firito.data.database.daos.DayLogDao
+import com.averito.firito.data.database.daos.FoodDao
 import com.averito.firito.data.database.AppDatabase
 import com.averito.firito.data.database.AppDatabaseHolder
 import dagger.Module

@@ -15,6 +15,7 @@ import androidx.navigation.navArgument
 import com.averito.firito.ui.layouts.base.BaseAppLayout
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.food.FoodScreen
+import com.averito.firito.ui.screens.goals_category.GoalsCategoryScreen
 import com.averito.firito.ui.screens.journal.JournalScreen
 import com.averito.firito.ui.screens.journal_details.JournalDetailsScreen
 import com.averito.firito.ui.screens.main.MainScreen
@@ -59,7 +60,19 @@ fun AppNavGraph(
             }
 
             composable(AppNavGraphRoutes.Settings.ROUTE) {
-                SettingsScreen(baseAppLayoutViewModel = baseAppLayoutViewModel)
+                SettingsScreen(
+                    baseAppLayoutViewModel = baseAppLayoutViewModel,
+                    onActivityGoals = {
+                        navController.navigate(
+                            AppNavGraphRoutes.GoalsCategory.getRoute(AppNavGraphRoutes.GoalsCategory.Category.ACTIVITY)
+                        )
+                    },
+                    onCaloriesGoals = {
+                        navController.navigate(
+                            AppNavGraphRoutes.GoalsCategory.getRoute(AppNavGraphRoutes.GoalsCategory.Category.CALORIES)
+                        )
+                    }
+                )
             }
 
             composable(AppNavGraphRoutes.Journal.ROUTE) {
@@ -97,6 +110,19 @@ fun AppNavGraph(
                 val category = AppNavGraphRoutes.StatisticsCategory.fromRouteParam(backStackEntry.arguments?.getString("category") ?: "")
 
                 StatisticsCategoryScreen(
+                    category = category,
+                    baseAppLayoutViewModel = baseAppLayoutViewModel,
+                    back = { navController.popBackStack() }
+                )
+            }
+
+            composable(
+                route = AppNavGraphRoutes.GoalsCategory.ROUTE,
+                arguments = listOf(navArgument("category") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val category = AppNavGraphRoutes.GoalsCategory.fromRouteParam(backStackEntry.arguments?.getString("category") ?: "")
+
+                GoalsCategoryScreen(
                     category = category,
                     baseAppLayoutViewModel = baseAppLayoutViewModel,
                     back = { navController.popBackStack() }

@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.averito.firito.data.models.day_log.DayLogModelImpl
 import com.averito.firito.data.models.day_log.DayLogWithFoodsModelImpl
 import com.averito.firito.data.models.food.FoodModelImpl
+import com.averito.firito.data.models.goals.GoalsModelImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.journal_details.components.JournalDetailsContent
 import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
@@ -42,19 +43,28 @@ fun JournalDetailsScreen(
 
     LaunchedEffect(Unit) {
         viewModel.loadDayLogWithFoods(date)
+        viewModel.loadGoals()
     }
 
     LaunchedEffect(uiState.dayLogWithFoods) {
         if (uiState.dayLogWithFoods == null) back()
     }
 
-    JournalDetailsContent(dayLogWithFoods = uiState.dayLogWithFoods!!)
+    JournalDetailsContent(
+        dayLogWithFoods = uiState.dayLogWithFoods!!,
+        goals = uiState.goals
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun JournalDetailsScreenPreview() {
     JournalDetailsContent(
+        goals = GoalsModelImpl(
+            calories = 1400,
+            steps = 0,
+            distance = 0.0
+        ),
         dayLogWithFoods = DayLogWithFoodsModelImpl(
             dayLog = DayLogModelImpl(
                 date = LocalDate.now(),

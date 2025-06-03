@@ -28,6 +28,9 @@ fun StatisticsScreen(
         baseAppLayoutViewModel.setActions(null)
         baseAppLayoutViewModel.setNavigationIcon(null)
         baseAppLayoutViewModel.setFloatingButton(null)
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.updateStatistics()
     }
 

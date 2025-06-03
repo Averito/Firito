@@ -2,7 +2,7 @@ package com.averito.firito.data.repositories.food
 
 import com.averito.firito.core.models.food.FoodModel
 import com.averito.firito.core.repositories.FoodRepository
-import com.averito.firito.data.daos.FoodDao
+import com.averito.firito.data.database.daos.FoodDao
 import com.averito.firito.data.mappers.toEntity
 import java.time.LocalDate
 import javax.inject.Inject

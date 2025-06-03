@@ -15,7 +15,9 @@ import com.averito.firito.ui.shared.ui.app_navigation.AppNavGraphRoutes
 @Composable
 fun SettingsScreen(
     viewModel: SettingsScreenViewModel = hiltViewModel(),
-    baseAppLayoutViewModel: BaseAppLayoutViewModel
+    baseAppLayoutViewModel: BaseAppLayoutViewModel,
+    onActivityGoals: () -> Unit,
+    onCaloriesGoals: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -56,6 +58,8 @@ fun SettingsScreen(
     }
 
     SettingsScreenContent(
+        onActivityGoals = onActivityGoals,
+        onCaloriesGoals = onCaloriesGoals,
         onExportClick = {
             exportLauncher.launch("firito_backup.db")
         },
@@ -69,6 +73,8 @@ fun SettingsScreen(
 @Composable
 fun SettingsPreview() {
     SettingsScreenContent(
+        onActivityGoals = {},
+        onCaloriesGoals = {},
         onExportClick = {},
         onImportClick = {}
     )

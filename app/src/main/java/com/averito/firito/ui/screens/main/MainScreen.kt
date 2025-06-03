@@ -16,6 +16,7 @@ import com.averito.firito.core.models.food.FoodModel
 import com.averito.firito.data.models.day_log.DayLogModelImpl
 import com.averito.firito.data.models.day_log.DayLogWithFoodsModelImpl
 import com.averito.firito.data.models.food.FoodModelImpl
+import com.averito.firito.data.models.goals.GoalsModelImpl
 import com.averito.firito.ui.layouts.base.BaseAppLayoutUiStateFloatingButtonOptions
 import com.averito.firito.ui.layouts.base.BaseAppLayoutViewModel
 import com.averito.firito.ui.screens.main.components.MainScreenContent
@@ -67,6 +68,7 @@ fun MainScreen(
     }
 
     MainScreenContent(
+        goals = uiState.goals,
         dayLogWithFoods = uiState.dayLogWithFoods,
         isLoading = uiState.isLoading,
         onRemoveFood = { viewModel.removeFood(it) },
@@ -80,6 +82,11 @@ fun MainScreen(
 @Composable
 fun MainScreenPreview() {
     MainScreenContent(
+        goals = GoalsModelImpl(
+            calories = 1400,
+            steps = 5000,
+            distance = 5.0
+        ),
         dayLogWithFoods = DayLogWithFoodsModelImpl(
             dayLog = DayLogModelImpl(
                 date = LocalDate.now(),
