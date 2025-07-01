@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 
 data class FoodScreenUiState(
     val food: FoodModelImpl = FoodModelImpl(),
+    val foodTemplatesSearch: String = "",
     val foodTemplates: List<FoodModel> = emptyList(),
     val foodTemplatesLoading: Boolean = false
 )

@@ -22,6 +22,12 @@ class FoodScreenViewModel @Inject constructor(
     var uiStateFood by mutableStateOf(FoodScreenUiStateFood())
         private set
 
+    val filteredFoodTemplates get() = _uiState.value.foodTemplates.filter { _uiState.value.foodTemplatesSearch.lowercase() in it.name.lowercase() }
+
+    fun updateFoodTemplatesSearch(value: String) {
+        _uiState.value = _uiState.value.copy(foodTemplatesSearch = value)
+    }
+
     fun updateUiStateFood(field: String, value: String) {
         uiStateFood = when (field) {
             "name" -> uiStateFood.copy(name = value)

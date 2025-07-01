@@ -3,11 +3,15 @@ package com.averito.firito.ui.screens.food.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.averito.firito.core.models.food.FoodModel
@@ -22,11 +26,18 @@ fun FoodScreenContent(
     updateUiStateFood: (String, String) -> Unit,
     foodTemplatesLoading: Boolean,
     foodTemplates: List<FoodModel>,
+    filteredFoodTemplates: List<FoodModel>,
+    foodTemplatesSearch: String,
+    updateFoodTemplatesSearch: (String) -> Unit,
     loadFoodTemplates: suspend () -> Unit,
     fillFoodByTemplate: (FoodModel) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(sheetState.isVisible) {
+        updateFoodTemplatesSearch("")
+    }
 
     fun onSheetDismiss() {
         coroutineScope.launch {
@@ -138,7 +149,34 @@ fun FoodScreenContent(
                     }
                     else -> {
                         LazyColumn(modifier = Modifier.padding(8.dp)) {
-                            items(foodTemplates) { foodTemplate ->
+                            item {
+                                OutlinedTextField(
+                                    value = foodTemplatesSearch,
+                                    onValueChange = { updateFoodTemplatesSearch(it) },
+                                    placeholder = { Text("Поиск") },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 4.dp, bottom = 12.dp),
+                                    shape = RoundedCornerShape(12.dp),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        unfocusedBorderColor = Color.Gray,
+                                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                        cursorColor = MaterialTheme.colorScheme.primary,
+                                        focusedTextColor = Color.White,
+                                        unfocusedTextColor = Color.White
+                                    ),
+                                    singleLine = true,
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Default.Search,
+                                            contentDescription = "Поиск",
+                                            tint = Color.Gray
+                                        )
+                                    }
+                                )
+                            }
+
+                            items(filteredFoodTemplates) { foodTemplate ->
                                 AppFoodCard(foodModel = foodTemplate, onClick = { onClickFoodItem(foodTemplate) })
                             }
                         }

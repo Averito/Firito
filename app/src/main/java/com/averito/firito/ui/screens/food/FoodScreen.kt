@@ -66,6 +66,9 @@ fun FoodScreen(
         updateUiStateFood = { field, value -> viewModel.updateUiStateFood(field, value) },
         foodTemplatesLoading = uiState.foodTemplatesLoading,
         foodTemplates = uiState.foodTemplates,
+        filteredFoodTemplates = viewModel.filteredFoodTemplates,
+        foodTemplatesSearch = uiState.foodTemplatesSearch,
+        updateFoodTemplatesSearch = { viewModel.updateFoodTemplatesSearch(it) },
         loadFoodTemplates = suspend { viewModel.loadFoodTemplates() },
         fillFoodByTemplate = { viewModel.fillFoodByTemplate(it) },
     )
@@ -88,6 +91,9 @@ fun FoodScreenPreview() {
         updateUiStateFood = { a,b -> },
         foodTemplatesLoading = false,
         foodTemplates = emptyList(),
+        filteredFoodTemplates = emptyList(),
+        foodTemplatesSearch = "",
+        updateFoodTemplatesSearch = {},
         loadFoodTemplates = {},
         fillFoodByTemplate = {},
     )
